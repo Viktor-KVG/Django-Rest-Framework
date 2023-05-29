@@ -6,7 +6,7 @@ class Author(User):
 
 
     # person = models.OneToOneField(User, on_delete=models.CASCADE,)
-    otch = models.CharField(max_length=25,verbose_name='ФИО', blank=False, )
+    otch = models.CharField(max_length=25,verbose_name='patronymic', blank=False, )
 
     phone = models.CharField(max_length=12, blank=False)
 
@@ -19,7 +19,7 @@ class Coordinates(models.Model):
     longitude = models.CharField(max_length=30)
     height = models.CharField(max_length=30)
     def __str__(self):
-        return 'Координаты'
+        return 'coords'
 
 
 class Level(models.Model):
