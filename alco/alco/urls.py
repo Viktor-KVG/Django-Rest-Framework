@@ -18,16 +18,20 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from testy import views
+from testy.views import UpdateViewset
 
 router = routers.DefaultRouter()
 router.register(r'author', views.AuthorViewset)
 router.register(r'level', views.LevelViewset)
 router.register(r'images', views.ImagesViewset)
 router.register(r'coordinates', views.CoordsViewset)
+# router.register(r'level1', UpdateViewset.as_view(), basename='UpdateView')
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 ]

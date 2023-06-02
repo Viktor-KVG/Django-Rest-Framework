@@ -26,16 +26,15 @@ class ImagesSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class LevelSerializer(serializers.HyperlinkedModelSerializer):
+    # info_author = serializers.HiddenField(default=serializers.CurrentUserDefault())
     # image = ImagesSerializer(many=True, read_only=False)
     # coordinates = CoordinatesSerializer(many=True, read_only=False)
     class Meta:
         model = Level
         fields = ['id', 'level_summer', 'level_winter', 'status_positions',
-                  'name_obj', 'text', 'coords', 'info_author', 'add_time' ]
+                  'name_obj', 'text', 'coords', 'info_author', 'add_time', ] #'image', 'coordinates'
 
-    # def create(self, validated_data):
-    #     images_data = validated_data.pop('file_image')
-    #     level = Level.objects.create(**validated_data)
-    #     for image_data in images_data:
-    #         Images.objects.create(level=level, **image_data)
-    #     return level
+    # def update(self, instance, validated_data):
+    #     instance.level_summer = validated_data.get('level_summer', instance.level_summer)
+    #     instance.level_winter = validated_data.get('level_winter', instance.level_winter)
+    #     return instance

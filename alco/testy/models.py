@@ -54,6 +54,7 @@ class Images(models.Model):
     file_image = models.ImageField(verbose_name='Изображение')
 
 
+
 from django.db import models
 
 # Create your models here.
