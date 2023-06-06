@@ -15,7 +15,10 @@ from .models import *
 class AuthorViewset(viewsets.ModelViewSet):
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['email']
     # permission_classes = (IsAdminUser, )
+
 
 
 
@@ -24,7 +27,7 @@ class LevelViewset(viewsets.ModelViewSet):
 
     serializer_class = LevelSerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filterset_fields = ['status_positions', 'name_obj', 'text', 'coords',]
+    filterset_fields = ['status_positions', 'name_obj', 'text', 'coords', 'info_author']
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
     @api_view(['GET'])
@@ -50,42 +53,19 @@ class LevelViewset(viewsets.ModelViewSet):
         return Response({'state':0, 'message': 'ошибка'}, status= status.HTTP_400_BAD_REQUEST)
 
 
+    @action(detail=False)
+    def show_information(self, request):
+        show_information = Level.objects.all().filter(info_author = 2 )
+        author = Level.info_author
+        page = self.paginate_queryset(show_information)
+        if page is author:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(show_information, many=True)
+        return Response(serializer.data)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   # @action(detail=True, methods=['get'])
-   # def status(self, request, pk=None):
-   #    lev = Level.objects.get(pk=pk)
-   #
-   #       return Response({'status':lev.status_positions})
-
-
-          # @action(detail=False, methods=['get'])
-          # def all_status(self, request, ):
-          #    lev = Level.objects.all()
-          #    return Response({'lev':lev})
-
-
-
-# def put(self, request, *args, **kwargs):
-   #    return self.update(request, *args, **kwargs)
-   #
-   # def putch(self,request, *args, **kwargs):
-   #    return self.partial_update(request, *args, **kwargs)
 
 
 class ImagesViewset(viewsets.ModelViewSet):
@@ -102,20 +82,8 @@ class UpdateViewset(generics.UpdateAPIView):
    queryset = Level.objects.all()
    serializer_class = LevelSerializer
 
-   # def put(self, request, *args, **kwargs):
-   #     return self.update(request, *args, **kwargs)
-   #
-   # def putch(self,request, *args, **kwargs):
-   #     return self.partial_update(request, *args, **kwargs)
-   #
 
 
 
-
-
-
-
-
-from django.shortcuts import render
 
 # Create your views here.

@@ -3,23 +3,20 @@ from django.db import models
 
 
 class Author(User):
-
-
-    # person = models.OneToOneField(User, on_delete=models.CASCADE,)
-    otch = models.CharField(max_length=25,verbose_name='patronymic', blank=False, )
-
+    otch = models.CharField(max_length=25, verbose_name='patronymic', blank=False, )
     phone = models.CharField(max_length=12, blank=False)
 
     def __str__(self):
-        return self.otch
+        return f"{self.username} - {self.email}"
 
 
 class Coordinates(models.Model):
     latitude = models.CharField(max_length=30)
     longitude = models.CharField(max_length=30)
     height = models.CharField(max_length=30)
+
     def __str__(self):
-        return 'coords'
+        return f'{self.latitude} / {self.longitude}'
 
 
 class Level(models.Model):
@@ -44,7 +41,7 @@ class Level(models.Model):
     name_obj = models.CharField(max_length=250, verbose_name='Название объекта', blank=False)
     text = models.TextField(verbose_name='Текст', blank=True)
     coords = models.OneToOneField(Coordinates, verbose_name='Координаты', on_delete=models.CASCADE)
-    info_author = models.ForeignKey(Author, verbose_name='Автор', on_delete=models.CASCADE)
+    info_author = models.ForeignKey(Author, verbose_name='Автор', on_delete=models.CASCADE, related_name='all_sync')
     add_time = models.DateTimeField(auto_now_add=True)
 
 
@@ -55,9 +52,4 @@ class Images(models.Model):
 
 
 
-from django.db import models
 
-# Create your models here.
-from django.db import models
-
-# Create your models here.

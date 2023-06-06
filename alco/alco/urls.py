@@ -25,7 +25,7 @@ router.register(r'author', views.AuthorViewset)
 router.register(r'level', views.LevelViewset)
 router.register(r'images', views.ImagesViewset)
 router.register(r'coordinates', views.CoordsViewset)
-# router.register(r'level1', UpdateViewset.as_view(), basename='UpdateView')
+
 
 
 
